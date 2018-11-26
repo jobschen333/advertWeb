@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.WalletDao">
+
+    <update id="addToken">
+        UPDATE adv_wallet
+        SET balance = balance + #{clickToken}
+        where user_id = #{userId}
+    </update>
+
+
+</mapper>

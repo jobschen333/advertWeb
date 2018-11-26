@@ -1,0 +1,5 @@
+modelPackage=com.web.bean
+#生成的mapper接口类所在包
+mapperPackage=com.web.dao
+#生成的mapper xml文件所在包，默认存储在resources目录下
+sqlMapperPackage=mapper
