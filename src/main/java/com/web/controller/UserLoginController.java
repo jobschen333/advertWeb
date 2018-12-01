@@ -2,8 +2,10 @@ package com.web.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.web.bean.BO.ResultBO;
+import com.web.bean.BO.UserSessionBO;
 import com.web.bean.DO.AdvUser;
 import com.web.config.ReturnCodeConfig;
+import com.web.interceptor.UserWebInterceptor;
 import com.web.service.IUserService;
 import com.web.util.MD5Util;
 import com.web.util.Results;
@@ -68,9 +70,20 @@ public class UserLoginController {
         if (advUser == null ) {
             Results.fail(ReturnCodeConfig.ParamError, "账号或者密码错误");
         }
+        UserSessionBO userSessionBO = UserSessionBO.builder().userId(advUser.getId())
+                .username(advUser.getUsername())
+                .account(advUser.getAccount())
+                .build();
+        UserWebInterceptor.loginSuccess(request, userSessionBO);
         return Results.success("登录成功！");
     }
 
+    /**
+     * 登录验证码
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @throws Exception
+     */
     @RequestMapping("defaultKaptcha")
     public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 

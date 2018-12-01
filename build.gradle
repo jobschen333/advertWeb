@@ -93,6 +93,10 @@ allprojects {
         //验证码相关
         compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
 
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+        compile("org.springframework.boot:spring-boot-devtools")
+
 
     }
 }

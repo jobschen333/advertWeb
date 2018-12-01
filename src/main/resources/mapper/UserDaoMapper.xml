@@ -10,7 +10,7 @@
         AND us.id = #{id}
     </select>
 
-    <select id="selectByUserAccountAndPassword" resultType="com.web.bean.DO.AdvAdvert">
+    <select id="selectByUserAccountAndPassword" resultType="com.web.bean.DO.AdvUser">
         SELECT id, username, password, sex, phone, email, sts, tag, addTime, account, realName
         FROM adv_user
         WHERE
