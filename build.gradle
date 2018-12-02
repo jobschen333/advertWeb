@@ -95,6 +95,7 @@ allprojects {
 
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
+        //热部署
         compile("org.springframework.boot:spring-boot-devtools")
 
 

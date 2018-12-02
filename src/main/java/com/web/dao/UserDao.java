@@ -3,12 +3,13 @@ package com.web.dao;
 import com.web.bean.DO.AdvUser;
 import com.web.bean.VO.UserVO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * 数据访问层
  * @author LinkinStar
  */
-
+@Repository
 public interface UserDao {
 
     /**

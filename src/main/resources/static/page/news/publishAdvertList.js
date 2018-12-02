@@ -6,7 +6,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-    //新闻列表
+    //发布广告列表
     var tableIns = table.render({
         elem: '#newsList',
         url : '/advert/businessList',
@@ -21,9 +21,11 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             {title: '序号', width:60, align:"center", type:"numbers"},
             {field: 'title', title: '标题', width:150},
             {field: 'url', title: '链接地址', align:'center'},
-            {field: 'pic', title: '图片地址',  align:'center'},
+            {field: 'pic', title: '封面图片', width:180, align:"center",templet:function(d){
+                    return '<a href="'+d.pic+'" target="_blank"><img src="'+d.pic+'" height="30" /></a>';
+                }},
             {field: 'status', title: '状态', align:'center'},
-            {field: 'add_time', title: '添加时间', align:'center'},
+            {field: 'add_time', title: '添加时间', align:'center',templet: '<div>{{ layui.laytpl.toDateString(d.add_time) }}</div>'},
 
             {title: '操作', width:170, templet:'#newsListBar',fixed:"right",align:"center"}
         ]],
@@ -69,8 +71,25 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         }
     });
 
-    //添加文章
+    //发布广告
     function addNews(edit){
+        $.ajax({
+            url: "/business/checkUpBusiness" ,    //后台方法名称
+            type: "get",
+            dataType: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.code == 1) {
+
+                } else {
+                    layer.msg("您不是商家账号,请申请上商家账号!");
+                }
+
+            },
+            error: function (msg) {
+            }
+        });
+
         var index = layui.layer.open({
             title : "新增广告",
             type : 2,
@@ -99,6 +118,8 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         $(window).on("resize",function(){
             layui.layer.full(index);
         })
+
+
     }
     $(".addNews_btn").click(function(){
         addNews();
@@ -146,5 +167,40 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
             layer.alert("此功能需要前台展示，实际开发中传入对应的必要参数进行文章内容页面访问")
         }
     });
+
+    //时间戳的处理
+    layui.laytpl.toDateString = function(d, format){
+        var date = new Date(d || new Date())
+            ,ymd = [
+            this.digit(date.getFullYear(), 4)
+            ,this.digit(date.getMonth() + 1)
+            ,this.digit(date.getDate())
+        ]
+            ,hms = [
+            this.digit(date.getHours())
+            ,this.digit(date.getMinutes())
+            ,this.digit(date.getSeconds())
+        ];
+
+        format = format || 'yyyy-MM-dd HH:mm:ss';
+
+        return format.replace(/yyyy/g, ymd[0])
+            .replace(/MM/g, ymd[1])
+            .replace(/dd/g, ymd[2])
+            .replace(/HH/g, hms[0])
+            .replace(/mm/g, hms[1])
+            .replace(/ss/g, hms[2]);
+    };
+
+    //数字前置补零
+    layui.laytpl.digit = function(num, length, end){
+        var str = '';
+        num = String(num);
+        length = length || 2;
+        for(var i = num.length; i < length; i++){
+            str += '0';
+        }
+        return num < Math.pow(10, length) ? str + (num|0) : num;
+    };
 
 })

@@ -45,10 +45,8 @@ layui.config({
             traditional: true,
             success: function (data) {
                 if (data.code == 1){
-                    debugger;
                     layer.msg(data.msg);
-                    //top.window.location.href = data.url;
-                    window.open(data.url);
+                    window.open(data.date);
                 } else {
                     layer.msg(data.msg);
                 }

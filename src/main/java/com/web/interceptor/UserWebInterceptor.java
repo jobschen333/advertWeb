@@ -42,14 +42,16 @@ public class UserWebInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        /*String sessionId = (String) request.getSession().getAttribute("sessionId");
-        if (!StringUtil.isNotNull(sessionId)) {
+        String sessionId = (String) request.getSession().getAttribute("sessionId");
+        if (StringUtil.isNotNull(sessionId)) {
             request.setAttribute("code", -1);
             request.setAttribute("message", "未登录，请登录");
-            request.getRequestDispatcher("/").forward(request, response);
+            //request.getRequestDispatcher("/").forward(request, response);
+            response.sendRedirect("/page/login/login.html");
             return false;
-        }*/
-        return false;
+        }
+        System.out.println("preHandle");
+        return true;
     }
 
     /**

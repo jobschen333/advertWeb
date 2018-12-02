@@ -1,11 +1,13 @@
 package com.web.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * 钱包dao
  * @author chxy
  */
+@Repository
 public interface WalletDao {
 
     /**

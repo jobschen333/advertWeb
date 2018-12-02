@@ -111,7 +111,7 @@ public class UserLoginController {
         responseOutputStream.write(captchaChallengeAsJpeg);
         responseOutputStream.flush();
         responseOutputStream.close();
-
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.web.dao;
 
 import com.web.bean.DO.AdvAdvert;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * 广告
  * @author chxy
  */
+@Repository
 public interface AdvAdvertDao {
 
     List<AdvAdvert> select(AdvAdvert advAdvert);

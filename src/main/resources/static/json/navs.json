@@ -3,7 +3,7 @@
 		{
 			"title": "发布广告",
 			"icon": "icon-text",
-			"href": "page/news/newsList.html",
+			"href": "page/news/publishAdvertList.html",
 			"spread": false
 		}
 	],

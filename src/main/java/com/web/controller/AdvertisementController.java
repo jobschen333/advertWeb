@@ -2,16 +2,21 @@ package com.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.web.bean.BO.ResultBO;
+import com.web.bean.BO.UserSessionBO;
 import com.web.bean.DO.AdvAdvert;
+import com.web.config.ProjectConfig;
 import com.web.oss.OSSUploadFile;
 import com.web.service.IAdvertismentService;
-import com.web.service.IBussinessService;
+import com.web.service.IBusinessService;
 import com.web.util.FileUtil;
 import com.web.util.JsonUtil;
+import com.web.util.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 广告
+ * 首页广告
  * @author chxy
  */
 @Controller
@@ -32,7 +37,7 @@ public class AdvertisementController {
     private IAdvertismentService advertismentService;
 
     @Autowired
-    private IBussinessService bussinessService;
+    private IBusinessService bussinessService;
 
     /**
      * 图片列表
@@ -61,8 +66,8 @@ public class AdvertisementController {
         String limitStr = request.getParameter("limit");
         AdvAdvert advAdvert = new AdvAdvert();
         advAdvert.setTitle(title);
-        int page = 1 ;
-        int limit = 10;
+        int page = ProjectConfig.FRIST_PAGE ;
+        int limit = ProjectConfig.PAGE_SIZE;
         if (pageStr!=""||pageStr!=null){
             page = Integer.parseInt(pageStr);
         }
@@ -161,41 +166,25 @@ public class AdvertisementController {
      */
     @RequestMapping(value = "clickAdvert", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject clickAdvert(HttpServletRequest request){
-        String idStr = request.getParameter("id");
-        JSONObject jsonObject = new JSONObject();
-        int id = 0;
-        if (idStr!=null && idStr!=""){
-            id = Integer.parseInt(idStr);
-        }
-        // TODO: 2018/10/7 通过redis获取  redis 就等同于session.  尤其早期的项目多服务必须用redis
-        int userId = 1;
+    public ResultBO clickAdvert(HttpServletRequest request, UserSessionBO userSessionBO, @RequestParam Integer id){
         AdvAdvert advAdvert = advertismentService.selectOne(id);
         if (advAdvert.getStatus()!=1){
-            jsonObject.put("code", -3);
-            jsonObject.put("msg", "图片状态不对!");
-            return jsonObject;
+            return Results.fail(3, "图片的状态不对!");
         }
         int status = advertismentService.clickAdv(advAdvert);
         if (status == -1){
-            jsonObject.put("code", -2);
-            jsonObject.put("msg", "已经超出点击范围!");
-            return jsonObject;
+            return Results.fail(2, "已经超出点击范围");
         }
-
-        if (status== 1){
-            boolean boo = bussinessService.changeToken(advAdvert.getClickToken(),advAdvert.getBusinessId(),userId);
+        if (status == 1){
+            boolean boo = bussinessService.changeToken(advAdvert.getClickToken(),advAdvert.getBusinessId(), userSessionBO.getUserId());
             if (boo == false){
-                jsonObject.put("code", -1);
-                jsonObject.put("msg","点击失败!");
-                return jsonObject;
+                return Results.fail("点击失败!");
             }
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "点击成功!");
-            jsonObject.put("url", advAdvert.getUrl());
-        }
 
-        return jsonObject;
+            return Results.success(advAdvert.getUrl(), "点击成功!");
+        } else {
+            return Results.fail(5,"未知错误");
+        }
 
     }
 

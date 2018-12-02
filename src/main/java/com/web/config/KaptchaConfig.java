@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * 验证码工具Kaptcha配置
- * @author wjc
+ * @author chenxy
  * create at 2018/9/11
  */
 @Component

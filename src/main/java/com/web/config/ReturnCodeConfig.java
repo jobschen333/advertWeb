@@ -9,4 +9,5 @@ public class   ReturnCodeConfig {
     /** 参数错误*/
     public final static int ParamError = 5;
 
+
 }
