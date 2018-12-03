@@ -18,7 +18,6 @@ layui.config({
                 var imgList = [],data = res.data;
                 var maxPage = imgNums*page < data.length ? imgNums*page : data.length;
                 setTimeout(function(){
-                    debugger;
                     for(var i=imgNums*(page-1); i<maxPage; i++){
                         imgList.push('<li><img id="'+data[i].id+'" layer-src="'+ data[i].src +'" src="'+ data[i].thumb +'" alt="'+data[i].alt+'"><div class="operate"><div class="check"><input type="checkbox" name="belle" lay-filter="choose" lay-skin="primary" title="'+data[i].alt+"  "+data[i].clickToken+"adv"+'">');
                     }
@@ -44,11 +43,12 @@ layui.config({
             dataType: "json",
             traditional: true,
             success: function (data) {
+                debugger
                 if (data.code == 1){
-                    layer.msg(data.msg);
-                    window.open(data.date);
+                    layer.msg(data.message);
+                    window.open(data.data);
                 } else {
-                    layer.msg(data.msg);
+                    layer.msg(data.message);
                 }
                 form.render();
 

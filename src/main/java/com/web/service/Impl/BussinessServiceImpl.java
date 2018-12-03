@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 /**
  * 商家表实现类
  * @author chxy
@@ -27,20 +29,19 @@ public class BussinessServiceImpl implements IBusinessService {
      * @param userId
      * @return
      */
-    @Transactional(rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean changeToken(double clickToken, int businessId, int userId) {
-
+    public boolean changeToken(BigDecimal clickToken, int businessId, int userId) {
         boolean boo = bussinessDao.decrease(businessId, clickToken);
-        if (!boo){
+;        if (!boo){
             return false;
         }
         boolean bool = walletDao.addToken(userId, clickToken);
-        if (!bool){
+        if (!bool) {
             throw new RuntimeException("交易token失败!");
-        } else {
-            return true;
         }
+        return true;
+
     }
 
     /**

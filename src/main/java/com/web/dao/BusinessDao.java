@@ -4,6 +4,8 @@ import com.web.bean.DO.AdvBusiness;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+
 /**
  * 商家dao
  * @author chxy
@@ -16,7 +18,7 @@ public interface BusinessDao {
      * @param clickToken
      * @return
      */
-    boolean decrease(@Param("businessId") int businessId, @Param("clickToken") double clickToken) ;
+    boolean decrease(@Param("businessId") int businessId, @Param("clickToken") BigDecimal clickToken) ;
 
     /**
      * 通过userId查找AdvBusiness

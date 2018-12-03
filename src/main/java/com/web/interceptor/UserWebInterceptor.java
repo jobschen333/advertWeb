@@ -43,14 +43,13 @@ public class UserWebInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String sessionId = (String) request.getSession().getAttribute("sessionId");
-        if (StringUtil.isNotNull(sessionId)) {
+        if (!StringUtil.isNotNull(sessionId)) {
             request.setAttribute("code", -1);
             request.setAttribute("message", "未登录，请登录");
-            //request.getRequestDispatcher("/").forward(request, response);
-            response.sendRedirect("/page/login/login.html");
+            //todo 无法访问静态页面
+            response.sendRedirect("/page/login/newLogin.html");
             return false;
         }
-        System.out.println("preHandle");
         return true;
     }
 
@@ -100,7 +99,7 @@ public class UserWebInterceptor implements HandlerInterceptor {
         if (!insertResult) {
             return null;
         }
-            userSession.setSessionId(sessionId);
+        userSession.setSessionId(sessionId);
         userSession.setOutTime(curTime.getTime());
         request.getSession().setAttribute("sessionId",sessionId);
         request.getSession().setAttribute(sessionId,userSession);

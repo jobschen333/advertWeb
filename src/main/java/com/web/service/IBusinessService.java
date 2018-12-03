@@ -2,6 +2,8 @@ package com.web.service;
 
 import com.web.bean.DO.AdvBusiness;
 
+import java.math.BigDecimal;
+
 /**
  * 商家服务
  * @author chxy
@@ -9,12 +11,12 @@ import com.web.bean.DO.AdvBusiness;
 public interface IBusinessService {
     /**
      * 交易token
-     * @param id
+     * @param clickToken 单次点击token
      * @param businessId
      * @param userId
      * @return
      */
-    boolean changeToken(double id, int businessId, int userId);
+    boolean changeToken(BigDecimal clickToken, int businessId, int userId);
 
     /**
      * 通过userId查找商家账号

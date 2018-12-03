@@ -1,8 +1,11 @@
 package com.web.bean.DO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -11,6 +14,8 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AdvAdvert {
 
     /**主键id*/
@@ -29,7 +34,7 @@ public class AdvAdvert {
     private String pic;
 
     /** 花费token*/
-    private double waste_token;
+    private BigDecimal waste_token;
 
     /** 最大点击数*/
     private int must_click;
@@ -58,6 +63,6 @@ public class AdvAdvert {
     /**
      * 单次点击的金额
      */
-    private double clickToken;
+    private BigDecimal clickToken;
 
 }

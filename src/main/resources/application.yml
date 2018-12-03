@@ -3,6 +3,13 @@ spring:
   profiles:
     active: dev
 
+  # 页面方面的配置
+  thymeleaf:
+    encoding: UTF-8
+    # 热部署静态文件
+    cache: false
+    # 让thymeleaf解析标签没有闭合时通过
+    mode: LEGACYHTML5
   # MVC相关配置
   mvc:
     # 配置ICO

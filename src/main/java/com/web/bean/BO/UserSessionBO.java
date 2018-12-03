@@ -23,6 +23,9 @@ public class UserSessionBO implements Serializable {
     /** 用户id */
     private int userId;
 
+    /** 商家ids*/
+    private int businessId;
+
     /** 用户账号*/
     private String username;
 

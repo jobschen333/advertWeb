@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.web.bean.BO.ResultBO;
 import com.web.bean.BO.UserSessionBO;
 import com.web.bean.DO.AdvAdvert;
+import com.web.bean.DO.AdvBusiness;
 import com.web.config.ProjectConfig;
 import com.web.oss.OSSUploadFile;
 import com.web.service.IAdvertismentService;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class AdvertisementController {
      */
     @ResponseBody
     @RequestMapping(value = "businessList", method = RequestMethod.GET)
-    public String businessList(HttpServletRequest request){
+    public String businessList(HttpServletRequest request, UserSessionBO userSessionBO){
         String title = request.getParameter("title");
         String addTime = request.getParameter("addTime");
         String pageStr = request.getParameter("page");
@@ -88,46 +90,32 @@ public class AdvertisementController {
      */
     @ResponseBody
     @RequestMapping(value = "addAdvert", method = RequestMethod.POST)
-    public JSONObject addAdvert(HttpServletRequest request){
-        JSONObject jsonObject = new JSONObject();
-        String url = request.getParameter("url");
-        String content = request.getParameter("content");
-        String title = request.getParameter("title");
-        String mustClick = request.getParameter("mustClick");
-        String wasteToken = request.getParameter("wasteToken");
-        String pic = request.getParameter("pic");
-        String clickTokenStr = request.getParameter("clickToken");
-        int must_click = 0;
-        AdvAdvert advAdvert = new AdvAdvert();
-        advAdvert.setTitle(title);
-        advAdvert.setAdd_time(new Date());
-        advAdvert.setContent(content);
-        if (mustClick!=null &&mustClick!=""){
-            must_click = Integer.parseInt(mustClick);
-        }
-        advAdvert.setMust_click(must_click);
-        advAdvert.setUrl(url);
-        double waste_token = 0;
-        if (wasteToken!=null &&wasteToken!=""){
-            waste_token = Double.parseDouble(wasteToken);
-        }
-        double clickToken = 0;
-        if (clickTokenStr!=null&&clickTokenStr!=""){
-            clickToken = Double.parseDouble(clickTokenStr);
-        }
-        advAdvert.setWaste_token(waste_token);
-        advAdvert.setPic(pic);
-        advAdvert.setCount_click(0);
-        advAdvert.setClickToken(clickToken);
+    public ResultBO addAdvert(HttpServletRequest request, @RequestParam String url,
+                                @RequestParam String content,
+                                @RequestParam String title,
+                                @RequestParam Integer mustClick,
+                                @RequestParam String pic,
+                                @RequestParam BigDecimal wasteToken,
+                                @RequestParam BigDecimal clickToken,
+                                UserSessionBO userSessionBO){
+        AdvBusiness advBusiness = bussinessService.selectByUserId(userSessionBO.getUserId());
+        AdvAdvert advAdvert = AdvAdvert.builder()
+                .add_time(new Date())
+                .businessId(advBusiness.getId())
+                .content(content)
+                .title(title)
+                .url(url)
+                .pic(pic)
+                .must_click(mustClick)
+                .clickToken(clickToken)
+                .waste_token(wasteToken)
+                .count_click(0)
+                .build();
         boolean boo = advertismentService.insert(advAdvert);
-        if (boo == true){
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "添加广告成功!");
-        } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "添加广告失败!");
+        if (!boo){
+            return Results.fail("添加广告失败!");
         }
-        return jsonObject;
+        return Results.success("添加广告成功!");
     }
 
     /**
@@ -148,7 +136,7 @@ public class AdvertisementController {
             e.printStackTrace();
         }
 
-        if (url!=""||url!=null){
+        if (url!="" && url!=null){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "上传图片成功!");
             jsonObject.put("path", url);
@@ -177,10 +165,9 @@ public class AdvertisementController {
         }
         if (status == 1){
             boolean boo = bussinessService.changeToken(advAdvert.getClickToken(),advAdvert.getBusinessId(), userSessionBO.getUserId());
-            if (boo == false){
+            if (!boo){
                 return Results.fail("点击失败!");
             }
-
             return Results.success(advAdvert.getUrl(), "点击成功!");
         } else {
             return Results.fail(5,"未知错误");

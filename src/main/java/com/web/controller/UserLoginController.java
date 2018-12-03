@@ -3,9 +3,11 @@ package com.web.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.web.bean.BO.ResultBO;
 import com.web.bean.BO.UserSessionBO;
+import com.web.bean.DO.AdvBusiness;
 import com.web.bean.DO.AdvUser;
 import com.web.config.ReturnCodeConfig;
 import com.web.interceptor.UserWebInterceptor;
+import com.web.service.IBusinessService;
 import com.web.service.IUserService;
 import com.web.util.MD5Util;
 import com.web.util.Results;
@@ -33,6 +35,9 @@ public class UserLoginController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IBusinessService businessService;
 
     /**
      * 验证码标识
@@ -70,9 +75,12 @@ public class UserLoginController {
         if (advUser == null ) {
             Results.fail(ReturnCodeConfig.ParamError, "账号或者密码错误");
         }
+
+        AdvBusiness advBusiness = businessService.selectByUserId(advUser.getId());
         UserSessionBO userSessionBO = UserSessionBO.builder().userId(advUser.getId())
                 .username(advUser.getUsername())
                 .account(advUser.getAccount())
+                .businessId(advBusiness.getId())
                 .build();
         UserWebInterceptor.loginSuccess(request, userSessionBO);
         return Results.success("登录成功！");
@@ -112,6 +120,8 @@ public class UserLoginController {
         responseOutputStream.flush();
         responseOutputStream.close();
     }
+
+
 
 
 }

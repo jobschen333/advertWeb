@@ -98,6 +98,9 @@ allprojects {
         //热部署
         compile("org.springframework.boot:spring-boot-devtools")
 
+        //web前端模块相关
+        //compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
 
     }
 }

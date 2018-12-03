@@ -7,8 +7,9 @@
         FROM adv_advert
         WHERE 1 = 1
         <if test="title!='' and title!=null">
-            and title = #{title}
+            AND title LIKE '%${title}%'
         </if>
+        AND status = 1
     </select>
 
     <insert id="insert" parameterType="com.web.bean.DO.AdvAdvert" >
