@@ -25,6 +25,10 @@ public class Results {
         return result(data, 1, msg);
     }
 
+    public static <T> ResultBO success(int code,T data, String msg){
+        return result(data, code, msg);
+    }
+
     public static <T> ResultBO fail(Integer code, String msg) {
         return result(null, code, msg);
     }

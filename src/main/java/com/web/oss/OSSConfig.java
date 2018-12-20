@@ -1,6 +1,7 @@
 package com.web.oss;
 
 /**
+ * 阿里云OSS配置
  * @author chxy
  */
 public class OSSConfig {
@@ -15,7 +16,7 @@ public class OSSConfig {
 
     public static final String AccessKeySecret = "ljCfd8dk6nIXGcG50MgpzqKWLdldP5";
 
-    public static final String BucketName = "web-adv2";
+    public static final String BucketName = "chenxy-adv2";
 
     public static final String ImageDir = "image";
 

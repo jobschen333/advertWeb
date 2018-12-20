@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.AdvRecordDao">
+
+    <insert id="insertRecord">
+        INSERT INTO adv_record (userId, advertId, money , addTime)
+        VALUES (#{userId}, #{advertId}, #{money} , #{addTime})
+    </insert>
+    <select id="selectRecordList" resultType="com.web.bean.VO.AdvRecordVO">
+        SELECT ar.id, ar.userId, ar.advertId, ar.addTime, ar.money, aa.title
+        FROM adv_record ar
+        INNER JOIN adv_advert aa ON ar.advertId = aa.id
+        WHERE userId = #{userId}
+    </select>
+</mapper>

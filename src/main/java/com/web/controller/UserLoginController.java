@@ -121,6 +121,22 @@ public class UserLoginController {
         responseOutputStream.close();
     }
 
+    /**
+     * 判断请求来源
+     * @param request
+     * @return
+     */
+    @RequestMapping("/checkAgent")
+    @ResponseBody
+    public ResultBO checkAgent(HttpServletRequest request) {
+        String userAgent = request.getHeader("User-Agent");
+        if(userAgent.indexOf("Android") != -1 || userAgent.indexOf("iPhone")!=-1 || userAgent.indexOf("iPad")!=-1) {
+            return Results.success("移动端来源");
+        } else {
+            return Results.success(2,"", "PC端");
+        }
+    }
+
 
 
 

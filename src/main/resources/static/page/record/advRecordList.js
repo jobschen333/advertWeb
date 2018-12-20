@@ -6,18 +6,16 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
         laytpl = layui.laytpl,
         table = layui.table;
 
-
     $.ajax({
-        url: "/index/checkAgent" ,
+        url: "/index/checkAgent",
         type: "get",
         dataType: "json",
         traditional: true,
         success: function (data) {
-            if (data.code == 1){
-                //发布广告列表
+            if (data.code == 1) {
                 var tableIns = table.render({
-                    elem: '#newsList',
-                    url : '/advert/businessList',
+                    elem: '#advRecordList',
+                    url : '/record/list',
                     cellMinWidth : 95,
                     page : true,
                     height : "full-125",
@@ -26,31 +24,20 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     id : "newsListTable",
                     cols : [[
                         {title: '序号', width:"10%", align:"center", type:"numbers"},
-                        {field: 'title', title: '标题', width:"30%"},
-                        {field: 'pic', title: '封面图片', width:"20%", align:"center",templet:function(d){
-                                return '<a href="'+d.pic+'" target="_blank"><img src="'+d.pic+'" height="30" /></a>';
-                            }},
-                        {field: 'status', title: '状态', align:'center',width:"20%"},
+                        {field: 'advertId', title: '广告id', width:"20%"},
+                        {field: 'title', title: '广告名称', align:'center', width:"30%"},
+                        {field: 'money', title: '点击代币', align:'center', width:"20%"},
+                        {field: 'addTime',width:"25%", title: '添加时间', align:'center',templet: '<div>{{ layui.laytpl.toDateString(d.add_time) }}</div>'}
 
-                        {title: '操作', width:"20%", templet:'#newsListBar',fixed:"right",align:"center"}
                     ]],
                     done: function(res, curr, count) {
-                        $("[data-field = 'status']").children().each(function () {
-                            if ($(this).text() == 0) {
-                                $(this).text("未审核");
-                            } else if ($(this).text() == 1) {
-                                $(this).text("审核通过");
-                            } else if ($(this).text() == -1) {
-                                $(this).text("审核未通过");
-                            }
-                        });
+
                     }
                 });
-            } else if (data.code == 2) {
-                //发布广告列表
+            }else if (data.code == 2) {
                 var tableIns = table.render({
-                    elem: '#newsList',
-                    url : '/advert/businessList',
+                    elem: '#advRecordList',
+                    url : '/record/list',
                     cellMinWidth : 95,
                     page : true,
                     height : "full-125",
@@ -59,35 +46,22 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
                     id : "newsListTable",
                     cols : [[
                         {title: '序号', width:"10%", align:"center", type:"numbers"},
-                        {field: 'title', title: '标题', width:"10%"},
-                        {field: 'url', title: '链接地址', align:'center',width:"20%"},
-                        {field: 'pic', title: '封面图片', width:"20%", align:"center",templet:function(d){
-                                return '<a href="'+d.pic+'" target="_blank"><img src="'+d.pic+'" height="30" /></a>';
-                            }},
-                        {field: 'status', title: '状态', align:'center',width:"20%"},
-                        {field: 'add_time', title: '添加时间', align:'center',templet: '<div>{{ layui.laytpl.toDateString(d.add_time) }}</div>',width:"10%"},
+                        {field: 'advertId', title: '广告id', width:"20%"},
+                        {field: 'title', title: '广告名称', align:'center', width:"30%"},
+                        {field: 'money', title: '点击代币', align:'center', width:"20%"},
+                        {field: 'addTime',width:"25%", title: '添加时间', align:'center',templet: '<div>{{ layui.laytpl.toDateString(d.add_time) }}</div>'}
 
-                        {title: '操作', width:"20%", templet:'#newsListBar',fixed:"right",align:"center"}
                     ]],
                     done: function(res, curr, count) {
-                        $("[data-field = 'status']").children().each(function () {
-                            if ($(this).text() == 0) {
-                                $(this).text("未审核");
-                            } else if ($(this).text() == 1) {
-                                $(this).text("审核通过");
-                            } else if ($(this).text() == -1) {
-                                $(this).text("审核未通过");
-                            }
-                        });
+
                     }
                 });
+
             }
-            form.render();
 
-        },
-        error: function (msg) {
         }
     });
+
 
 
 

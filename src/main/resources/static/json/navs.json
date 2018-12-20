@@ -11,19 +11,13 @@
 		{
 			"title": "用户资料",
 			"icon": "&#xe612;",
-			"href": "page/user/userList.html",
-			"spread": false
-		},
-		{
-			"title": "钱包管理",
-			"icon": "icon-vip",
-			"href": "page/user/userGrade.html",
+			"href": "page/user/userInfo.html",
 			"spread": false
 		},
 		{
 			"title": "历史记录",
 			"icon": "icon-text",
-			"href": "page/user/userGrade.html",
+			"href": "page/record/advRecordList.html",
 			"spread": false
 		}
 	],

@@ -130,7 +130,6 @@ public class AdvertisementController {
         String url= "";
         try {
             File file2 = FileUtil.transferTo(file);
-            System.out.println(file2.length());
             url= OSSUploadFile.uploadFile(file2);
         }catch (Exception e){
             e.printStackTrace();
@@ -164,7 +163,7 @@ public class AdvertisementController {
             return Results.fail(2, "已经超出点击范围");
         }
         if (status == 1){
-            boolean boo = bussinessService.changeToken(advAdvert.getClickToken(),advAdvert.getBusinessId(), userSessionBO.getUserId());
+            boolean boo = bussinessService.changeToken(advAdvert.getId(),advAdvert.getClickToken(),advAdvert.getBusinessId(), userSessionBO.getUserId());
             if (!boo){
                 return Results.fail("点击失败!");
             }
