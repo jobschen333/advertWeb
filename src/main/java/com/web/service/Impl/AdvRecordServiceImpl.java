@@ -2,6 +2,7 @@ package com.web.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.web.bean.DO.AdvRecordDO;
 import com.web.bean.VO.AdvRecordVO;
 import com.web.dao.AdvRecordDao;
 import com.web.service.IAdvRecordService;
@@ -24,5 +25,16 @@ public class AdvRecordServiceImpl implements IAdvRecordService {
         PageHelper.startPage(page, limit);
         List<AdvRecordVO> list = advRecordDao.selectRecordList(userId);
         return new PageInfo(list);
+    }
+
+    /**
+     * 搜索点击记录
+     * @param id
+     * @param userId
+     * @return
+     */
+    @Override
+    public AdvRecordDO selectRecord(Integer id, int userId) {
+        return advRecordDao.selectRecord(id, userId);
     }
 }

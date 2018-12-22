@@ -26,4 +26,12 @@ public interface AdvRecordDao {
      * @return
      */
     List<AdvRecordVO> selectRecordList(@Param("userId") int userId);
+
+    /**
+     * 搜索点击广告记录
+     * @param advertId
+     * @param userId
+     * @return
+     */
+    AdvRecordDO selectRecord(@Param("advertId") Integer advertId,@Param("userId") int userId);
 }

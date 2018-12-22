@@ -12,4 +12,10 @@
         INNER JOIN adv_advert aa ON ar.advertId = aa.id
         WHERE userId = #{userId}
     </select>
+    <select id="selectRecord" resultType="com.web.bean.DO.AdvRecordDO">
+        SELECT id, userId, advertId, addTime, money
+        FROM adv_record
+        WHERE userId = #{userId}
+        AND advertId = #{advertId}
+    </select>
 </mapper>

@@ -11,7 +11,7 @@
         <withJansi>true</withJansi>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %boldYellow([%thread]) %highlight([%-5level]) %boldGreen(%logger{50}) - %msg%n</pattern>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%thread] %highlight([%-5level] %logger{50} - %msg%n)</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -93,7 +93,7 @@
             <appender-ref ref="MY_INFO_FILE"/>
         </logger>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="SYSTEM_FILE"/>
         </root>

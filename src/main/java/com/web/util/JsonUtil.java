@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.web.bean.DO.AdvAdvert;
+import com.web.bean.VO.AdvAdvertVO;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class JsonUtil {
      * @param list
      * @return
      */
-    public static String imageListToJson(List<AdvAdvert> list){
+    public static String imageListToJson(List<AdvAdvertVO> list){
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         jsonObject.put("title", "图片管理");

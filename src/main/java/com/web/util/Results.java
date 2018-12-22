@@ -33,6 +33,11 @@ public class Results {
         return result(null, code, msg);
     }
 
+    public static <T> ResultBO fail(T data,Integer code, String msg) {
+        return result(data, code, msg);
+    }
+
+
     public static <T> ResultBO fail(String error) {
         return fail(2, error);
     }

@@ -1,6 +1,7 @@
 package com.web.dao;
 
 import com.web.bean.DO.AdvAdvert;
+import com.web.bean.VO.AdvAdvertVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +14,16 @@ import java.util.List;
 @Repository
 public interface AdvAdvertDao {
 
-    List<AdvAdvert> select(AdvAdvert advAdvert);
+    /**
+     * 查找图片页面列表
+     * @param advAdvert
+     * @param userId
+     * @return
+     */
+    List<AdvAdvertVO> select(@Param("advAdvert") AdvAdvert advAdvert, @Param("userId") int userId);
 
+
+    List<AdvAdvert> selectPage(AdvAdvert advAdvert);
 
     /**
      * 新增

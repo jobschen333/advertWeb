@@ -3,6 +3,7 @@ package com.web.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.web.bean.DO.AdvAdvert;
+import com.web.bean.VO.AdvAdvertVO;
 import com.web.dao.AdvAdvertDao;
 import com.web.service.IAdvertismentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class AdvertismentServiceImpl implements IAdvertismentService {
      * @return
      */
     @Override
-    public List<AdvAdvert> select(AdvAdvert advAdvert) {
-        return advAdvertDao.select(advAdvert);
+    public List<AdvAdvertVO> select(AdvAdvert advAdvert, int userId) {
+        return advAdvertDao.select(advAdvert, userId);
     }
 
     /**
@@ -41,7 +42,7 @@ public class AdvertismentServiceImpl implements IAdvertismentService {
     @Override
     public PageInfo selectPage(AdvAdvert advAdvert, int page, int limit) {
         PageHelper.startPage(page,limit);
-        List<AdvAdvert> list = advAdvertDao.select(advAdvert);
+        List<AdvAdvert> list = advAdvertDao.selectPage(advAdvert);
         PageInfo<AdvAdvert> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }

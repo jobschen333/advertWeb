@@ -2,12 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.dao.AdvAdvertDao">
 
-    <select id="select" resultType="com.web.bean.DO.AdvAdvert" parameterType="com.web.bean.DO.AdvAdvert">
+    <resultMap id="resultAdvertVO" type="com.web.bean.VO.AdvAdvertVO" >
+        <id column="id" property="id" />
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="url" property="url"/>
+        <result column="pic" property="pic"/>
+        <result column="waste_token" property="waste_token"/>
+        <result column="must_click" property="must_click"/>
+        <result column="count_click" property="count_click"/>
+        <result column="add_time" property="add_time"/>
+        <result column="status" property="status"/>
+        <result column="businessId" property="businessId"/>
+        <result column="rank" property="rank"/>
+        <result column="clickToken" property="clickToken"/>
+
+        <association property="advRecordDO" column="{id}" javaType="com.web.bean.DO.AdvRecordDO" select="selectRecord" >
+        </association>
+    </resultMap>
+
+    <select id="selectRecord" resultType="com.web.bean.DO.AdvRecordDO">
+        SELECT id, userId, advertId, addTime, money
+        FROM adv_record
+        WHERE userId = #{userId}
+        AND advertId = #{id}
+    </select>
+    
+    <select id="select" resultMap="resultAdvertVO">
         select id, title, content, url, pic, waste_token, must_click, count_click, add_time, status, businessId,rank, clickToken
         FROM adv_advert
         WHERE 1 = 1
-        <if test="title!='' and title!=null">
-            AND title LIKE '%${title}%'
+        <if test="advAdvert.title!='' and advAdvert.title!=null">
+            AND title LIKE '%${advAdvert.title}%'
         </if>
         AND status = 1
     </select>
@@ -23,6 +49,15 @@
         FROM adv_advert
         WHERE
         id = #{id}
+    </select>
+    <select id="selectPage" resultType="com.web.bean.DO.AdvAdvert">
+        select id, title, content, url, pic, waste_token, must_click, count_click, add_time, status, businessId,rank, clickToken
+        FROM adv_advert
+        WHERE 1 = 1
+        <if test="title!='' and title!=null">
+            AND title LIKE '%${title}%'
+        </if>
+        AND status = 1
     </select>
 
     <update id="addClick" >

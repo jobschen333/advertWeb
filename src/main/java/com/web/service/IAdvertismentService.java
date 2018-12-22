@@ -2,6 +2,7 @@ package com.web.service;
 
 import com.github.pagehelper.PageInfo;
 import com.web.bean.DO.AdvAdvert;
+import com.web.bean.VO.AdvAdvertVO;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface IAdvertismentService {
      * @param advAdvert
      * @return
      */
-    List<AdvAdvert> select(AdvAdvert advAdvert);
+    List<AdvAdvertVO> select(AdvAdvert advAdvert, int userId);
 
     /**
      * 分页查找

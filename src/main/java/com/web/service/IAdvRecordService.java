@@ -1,6 +1,7 @@
 package com.web.service;
 
 import com.github.pagehelper.PageInfo;
+import com.web.bean.DO.AdvRecordDO;
 
 /**
  * 广告点击记录
@@ -16,4 +17,13 @@ public interface IAdvRecordService {
      * @return
      */
     PageInfo selectRecordList(int userId, Integer page, Integer limit);
+
+    /**
+     * 搜索点击记录
+     * @param id
+     * @param userId
+     * @return
+     */
+    AdvRecordDO selectRecord(Integer id, int userId);
+
 }

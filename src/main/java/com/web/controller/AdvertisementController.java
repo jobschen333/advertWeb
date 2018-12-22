@@ -6,8 +6,11 @@ import com.web.bean.BO.ResultBO;
 import com.web.bean.BO.UserSessionBO;
 import com.web.bean.DO.AdvAdvert;
 import com.web.bean.DO.AdvBusiness;
+import com.web.bean.DO.AdvRecordDO;
+import com.web.bean.VO.AdvAdvertVO;
 import com.web.config.ProjectConfig;
 import com.web.oss.OSSUploadFile;
+import com.web.service.IAdvRecordService;
 import com.web.service.IAdvertismentService;
 import com.web.service.IBusinessService;
 import com.web.util.FileUtil;
@@ -41,16 +44,20 @@ public class AdvertisementController {
     @Autowired
     private IBusinessService bussinessService;
 
+    @Autowired
+    private IAdvRecordService advRecordService;
+
     /**
      * 图片列表
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
-    public String list(HttpServletRequest request){
+    public String list(HttpServletRequest request, UserSessionBO userSessionBO){
         String title = request.getParameter("title");
         AdvAdvert advAdvert = new AdvAdvert();
         advAdvert.setTitle(title);
-        List<AdvAdvert> list = advertismentService.select(advAdvert);
+        //todo 查询条件给子查询
+        List<AdvAdvertVO> list = advertismentService.select(advAdvert, userSessionBO.getUserId());
         return JsonUtil.imageListToJson(list);
     }
 
@@ -162,6 +169,12 @@ public class AdvertisementController {
         if (status == -1){
             return Results.fail(2, "已经超出点击范围");
         }
+
+        AdvRecordDO advRecordDO = advRecordService.selectRecord(id, userSessionBO.getUserId());
+        if (advRecordDO != null) {
+            return Results.fail(advAdvert.getUrl(), -1 , "您已经点击过!");
+        }
+
         if (status == 1){
             boolean boo = bussinessService.changeToken(advAdvert.getId(),advAdvert.getClickToken(),advAdvert.getBusinessId(), userSessionBO.getUserId());
             if (!boo){

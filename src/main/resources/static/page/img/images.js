@@ -43,13 +43,13 @@ layui.config({
             dataType: "json",
             traditional: true,
             success: function (data) {
-                debugger
-                if (data.code == 1){
+                if (data.code == 1 || data.code == -1){
                     layer.msg(data.message);
                     window.open(data.data);
                 } else {
                     layer.msg(data.message);
                 }
+
                 form.render();
 
             },
@@ -79,16 +79,6 @@ layui.config({
     });
 
     //通过判断是否全部选中来确定全选按钮是否选中
-    form.on("checkbox(choose)",function(data){
-        var child = $(data.elem).parents('#Images').find('li input[type="checkbox"]');
-        var childChecked = $(data.elem).parents('#Images').find('li input[type="checkbox"]:checked');
-        if(childChecked.length == child.length){
-            $(data.elem).parents('#Images').siblings("blockquote").find('input#selectAll').get(0).checked = true;
-        }else{
-            $(data.elem).parents('#Images').siblings("blockquote").find('input#selectAll').get(0).checked = false;
-        }
-        form.render('checkbox');
-    })
 
     //批量删除
     $(".batchDel").click(function(){
