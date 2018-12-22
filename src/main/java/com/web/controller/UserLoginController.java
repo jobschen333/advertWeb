@@ -68,12 +68,12 @@ public class UserLoginController {
         validateCode = validateCode.toLowerCase();
         sessionCode = sessionCode.toLowerCase();
         if (!validateCode.equals(sessionCode)) {
-            Results.fail(ReturnCodeConfig.ParamError, "验证码错误");
+            return Results.fail(ReturnCodeConfig.ParamError, "验证码错误");
         }
         password = MD5Util.toMd5(password);
         AdvUser advUser = userService.selectByUserAccountAndPassword(userAccount, password);
         if (advUser == null ) {
-            Results.fail(ReturnCodeConfig.ParamError, "账号或者密码错误");
+            return Results.fail(ReturnCodeConfig.ParamError, "账号或者密码错误");
         }
 
         AdvBusiness advBusiness = businessService.selectByUserId(advUser.getId());

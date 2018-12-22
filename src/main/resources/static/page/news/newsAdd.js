@@ -70,6 +70,10 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
     form.on("submit(addNews)",function(data){
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        if ($(".thumbImg").attr("src")== "" || typeof($(".thumbImg").attr("src")) == "undefined") {
+            top.layer.msg("请上传广告图片!");
+            return false;
+        }
          $.post("/advert/addAdvert",{
              title : $(".title").val(),  //文章标题
              wasteToken : $(".wasteToken").val(),  //文章摘要
@@ -104,5 +108,33 @@ layui.use(['form','layer','layedit','laydate','upload'],function(){
             url : "../../json/newsImg.json"
         }
     });
+    
+
 
 })
+
+//计算之和
+function  calculatePay() {
+    var mustClick = $(".mustClick").val();
+    var clickToken = $(".clickToken").val();
+    if (mustClick != "" && clickToken != "") {
+        $(".wasteToken").val(numMulti(mustClick,clickToken));
+        $(".wasteToken").html(numMulti(mustClick,clickToken));
+    }
+
+   // alert("11");
+}
+
+
+function numMulti(num1, num2) {
+    var baseNum = 0;
+    try {
+        baseNum += num1.toString().split(".")[1].length;
+    } catch (e) {
+    }
+    try {
+        baseNum += num2.toString().split(".")[1].length;
+    } catch (e) {
+    }
+    return Number(num1.toString().replace(".", "")) * Number(num2.toString().replace(".", "")) / Math.pow(10, baseNum);
+};

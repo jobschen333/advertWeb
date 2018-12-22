@@ -9,6 +9,15 @@ layui.use(['form','layer','jquery'],function(){
         });
     })
 
+    //注册按钮
+    form.on("submit(register)",function(data){
+
+
+        setTimeout(function(){
+        },1000);
+        return false;
+    });
+
     //登录按钮
     form.on("submit(login)",function(data){
         var userAccount = $('#userName').val();
@@ -29,12 +38,13 @@ layui.use(['form','layer','jquery'],function(){
                 }
             ,
             success: function (data) {
+                debugger;
                 if (data.code == 1){
                     window.location.href = "../../index.html";
                 } else if(data.code == 2){
                     layer.msg("账户或者密码不正确!");
-                } else if (data.code == 3){
-                    layer.msg(data.msg);
+                } else {
+                    layer.msg(data.message);
                 }
 
             },
