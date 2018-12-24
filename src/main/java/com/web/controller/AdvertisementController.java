@@ -9,6 +9,7 @@ import com.web.bean.DO.AdvBusiness;
 import com.web.bean.DO.AdvRecordDO;
 import com.web.bean.VO.AdvAdvertVO;
 import com.web.config.ProjectConfig;
+import com.web.interceptor.UserWebInterceptor;
 import com.web.oss.OSSUploadFile;
 import com.web.service.IAdvRecordService;
 import com.web.service.IAdvertismentService;
@@ -52,12 +53,18 @@ public class AdvertisementController {
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
-    public String list(HttpServletRequest request, UserSessionBO userSessionBO){
+    public String list(HttpServletRequest request){
+        UserSessionBO userSessionBO = UserWebInterceptor.getUserSessionBO(request);
+        int userId = 0;
+        if (userSessionBO != null) {
+            userId = userSessionBO.getUserId();
+        }
+
         String title = request.getParameter("title");
         AdvAdvert advAdvert = new AdvAdvert();
         advAdvert.setTitle(title);
         //todo 查询条件给子查询
-        List<AdvAdvertVO> list = advertismentService.select(advAdvert, userSessionBO.getUserId());
+        List<AdvAdvertVO> list = advertismentService.select(advAdvert, userId);
         return JsonUtil.imageListToJson(list);
     }
 

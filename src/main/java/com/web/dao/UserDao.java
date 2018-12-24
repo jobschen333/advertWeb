@@ -26,4 +26,11 @@ public interface UserDao {
      * @return
      */
     AdvUser selectByUserAccountAndPassword(@Param("username") String username, @Param("password") String password);
+
+    /**
+     * 新增用户
+     * @param advUser
+     * @return
+     */
+    boolean insertAdvUser(AdvUser advUser);
 }

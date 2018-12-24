@@ -1,5 +1,7 @@
 package com.web.bean.DO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,8 @@ import java.sql.Timestamp;
  */
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class AdvUser {
 
     /**主键id*/

@@ -3,48 +3,34 @@ layui.use(['form','layer','jquery'],function(){
         layer = parent.layer === undefined ? layui.layer : top.layer
         $ = layui.jquery;
 
-    //注册按钮
-    form.on("submit(register)",function(data){
-
-        window.location = "register.html";
-        setTimeout(function(){
-        },1000);
-        return false;
-    });
 
     //登录按钮
-    form.on("submit(login)",function(data){
-        var userAccount = $('#userName').val();
-        var userPassword = $('#password').val();
-        var validateCode = $("#code").val();
-        if (userAccount =="" || userPassword ==""){
-            layer.msg("账号或者密码不能为空!");
-            return false;
+    form.on("submit(register)",function(data){
+        var username = $('#userName').val();
+        var password = $('#password').val();
+        var password2 = $('#password2').val();
+        var phone = $("#phone").val();
+        var email = $("#email").val();
+
+        if (password != password2) {
+            layer.msg("两次密码输入不一致")
         }
 
-        if (validateCode == "") {
-            lay.msg("请输入验证码!");
-        }
         $.ajax({
-            url: "/index/login",
+            url: "/index/register",
             type: "POST",
             dataType: "json",
             data: {
-                userAccount : userAccount,
-                password : userPassword,
-                validateCode : validateCode
+                username : username,
+                password : password,
+                phone : phone,
+                email : email
                 }
             ,
             success: function (data) {
-                debugger;
-                if (data.code == 1){
-                    window.location.href = "../../index.html";
-                } else if(data.code == 2){
-                    layer.msg("账户或者密码不正确!");
-                } else {
-                    layer.msg(data.message);
+                if (data.code == 1) {
+                    window.location = "login.html";
                 }
-
             },
             error: function (msg) {
             }

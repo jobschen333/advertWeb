@@ -24,4 +24,11 @@ public interface IUserService {
      * @return
      */
     AdvUser selectByUserAccountAndPassword(String userAccount, String password);
+
+    /**
+     * 注册
+     * @param advUser
+     * @return
+     */
+    boolean register(AdvUser advUser);
 }

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.dao.UserDao">
+    <insert id="insertAdvUser">
+        INSERT INTO adv_user
+        (username, password,sex,  phone, email, sts, tag, addTime, account, realName  )
+        VALUES (#{username}, #{password}, #{sex}, #{phone}, #{email}, 'Y', #{tag},
+        #{addTime}, #{account}, #{realName})
+    </insert>
 
     <select id="getUser" resultType="com.web.bean.VO.UserVO">
         SELECT us.id,us.username, us.password, us.sex, us.phone, us.email, us.sts, us.tag, us.addTime, us.account, us.realName ,

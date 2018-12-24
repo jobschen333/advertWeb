@@ -1,7 +1,11 @@
 package com.web.bean.DO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 /**
  * 钱包表
@@ -9,6 +13,8 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 public class AdvWallet {
 
     /** 主键id*/
@@ -18,7 +24,7 @@ public class AdvWallet {
     private int user_id;
 
     /** 用户余额*/
-    private double balance;
+    private BigDecimal balance;
 
     /** 用户地址*/
     private String address;

@@ -21,9 +21,15 @@ layui.use(['form','layer','upload','laydate',"address"],function(){
         success: function (data) {
             if (data.code == 1){
                 layer.msg(data.msg);
-                $(".account").val(data.data.account);
+                $(".account").val(data.data.username);
                 $(".realName").val(data.data.realName);
                 $(".sex").val(data.data.sex);
+                if (data.data.sex == 1) {
+                    $(".sex").val("男");
+                } else {
+                    $(".sex").val("女");
+                }
+
                 $(".phone").val(data.data.phone);
                 $(".email").val(data.data.email);
                 $(".address").val(data.data.address);

@@ -3,12 +3,12 @@ package com.web.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.web.bean.BO.ResultBO;
 import com.web.bean.BO.UserSessionBO;
-import com.web.bean.DO.AdvBusiness;
 import com.web.bean.DO.AdvUser;
 import com.web.config.ReturnCodeConfig;
 import com.web.interceptor.UserWebInterceptor;
 import com.web.service.IBusinessService;
 import com.web.service.IUserService;
+import com.web.util.DateUtil;
 import com.web.util.MD5Util;
 import com.web.util.Results;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,14 +76,39 @@ public class UserLoginController {
             return Results.fail(ReturnCodeConfig.ParamError, "账号或者密码错误");
         }
 
-        AdvBusiness advBusiness = businessService.selectByUserId(advUser.getId());
         UserSessionBO userSessionBO = UserSessionBO.builder().userId(advUser.getId())
                 .username(advUser.getUsername())
                 .account(advUser.getAccount())
-                .businessId(advBusiness.getId())
                 .build();
         UserWebInterceptor.loginSuccess(request, userSessionBO);
         return Results.success("登录成功！");
+    }
+
+    /**
+     * 注册
+     * @param request
+     * @return
+     */
+    @RequestMapping("register")
+    @ResponseBody
+    public ResultBO register(HttpServletRequest request,
+                             @RequestParam String username,
+                             @RequestParam String password,
+                             @RequestParam String phone,
+                                 @RequestParam String email) {
+        password = MD5Util.toMd5(password);
+        AdvUser advUser = AdvUser.builder()
+                .username(username)
+                .password(password)
+                .phone(phone)
+                .email(email)
+                .addTime(DateUtil.getCurrentTime())
+                .build();
+        boolean boo = userService.register(advUser);
+        if (!boo) {
+            return Results.fail("注册失败!");
+        }
+        return Results.success("注册成功");
     }
 
     /**

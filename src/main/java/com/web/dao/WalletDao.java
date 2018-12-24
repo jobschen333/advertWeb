@@ -1,5 +1,6 @@
 package com.web.dao;
 
+import com.web.bean.DO.AdvWallet;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,12 @@ public interface WalletDao {
      * @return
      */
     boolean addToken(@Param("userId") int userId, @Param("clickToken") BigDecimal clickToken);
+
+    /**
+     * 新增
+     * @param advWallet
+     * @return
+     */
+    int insert(AdvWallet advWallet);
+
 }

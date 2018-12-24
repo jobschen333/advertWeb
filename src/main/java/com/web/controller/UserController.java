@@ -1,6 +1,7 @@
 package com.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.web.bean.BO.UserSessionBO;
 import com.web.bean.VO.UserVO;
 import com.web.service.IUserService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
@@ -22,10 +23,9 @@ public class UserController {
 
     @RequestMapping("userInfo")
     @ResponseBody
-    public JSONObject userInfo(HttpServletRequest request){
+    public JSONObject userInfo(HttpServletRequest request, UserSessionBO userSessionBO){
         JSONObject jsonObject = new JSONObject();
-        int id = 1;
-        UserVO userVO = userService.getUser(id);
+        UserVO userVO = userService.getUser(userSessionBO.getUserId());
         if (userVO!=null){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "查找数据成功!");
