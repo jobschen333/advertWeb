@@ -20,7 +20,7 @@ layui.use(['form','layer','upload','laydate',"address"],function(){
         traditional: true,
         success: function (data) {
             if (data.code == 1){
-                layer.msg(data.msg);
+                //layer.msg(data.msg);
                 $(".account").val(data.data.username);
                 $(".realName").val(data.data.realName);
                 $(".sex").val(data.data.sex);
@@ -71,32 +71,49 @@ layui.use(['form','layer','upload','laydate',"address"],function(){
 
     //提交个人资料
     form.on("submit(changeUser)",function(data){
-        var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
-        //将填写的用户信息存到session以便下次调取
-        var key,userInfoHtml = '';
-        userInfoHtml = {
-            'realName' : $(".realName").val(),
-            'sex' : data.field.sex,
-            'userPhone' : $(".userPhone").val(),
-            'userBirthday' : $(".userBirthday").val(),
-            'province' : data.field.province,
-            'city' : data.field.city,
-            'area' : data.field.area,
-            'userEmail' : $(".userEmail").val(),
-            'myself' : $(".myself").val()
-        };
-        for(key in data.field){
-            if(key.indexOf("like") != -1){
-                userInfoHtml[key] = "on";
+        var index = layer.open({
+            title : "提币操作",
+            type : 2,
+            area : ["400px","400px"],
+            content : "page/user/serverAdd.html",
+            success : function(layero, index){
+                //var body = $($(".layui-layer-iframe",parent.document).find("iframe")[0].contentWindow.document.body);
+                setTimeout(function(){
+                    layui.layer.tips('点击此处返回友链列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                },500)
             }
-        }
-        window.sessionStorage.setItem("userInfo",JSON.stringify(userInfoHtml));
-        setTimeout(function(){
-            layer.close(index);
-            layer.msg("提交成功！");
-        },2000);
-        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        })
     })
+
+
+    form.on("submit(transferAccounts)",function(data){
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        $.post("/transfer/transferAccounts",{
+            advAddress : $(".advAddress").val(),  //logo
+            balance : $(".balance").val(),  //网站名称
+            remark : $(".remark").val(),    //网址
+        },function(res){
+            if (res.code == 0){
+                top.layer.msg(res.message);
+            } else if (res.code == 1){
+                setTimeout(function(){
+                    top.layer.close(index);
+                    top.layer.msg("转账成功！");
+                    layer.closeAll("iframe");
+                    //刷新父页面
+                    $(".layui-tab-item.layui-show",parent.document).find("iframe")[0].contentWindow.location.reload();
+                },500);
+            }
+
+
+        });
+
+        return false;
+    })
+
+
 
     //修改密码
     form.on("submit(changePwd)",function(data){

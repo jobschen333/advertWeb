@@ -32,7 +32,7 @@ layui.use(['form','jquery',"layer"],function() {
             id: 'LAY_layuipro',
             btn: ['火速围观'],
             moveType: 1,
-            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p class="layui-red"></p></pclass></p><p>：<span class="layui-red">。</span></p></div>',
+            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p class="layui-red"></p></pclass></p><p>：<span class="layui-red">点击广告就能获得广告链</span></p></div>',
             success: function(layero){
                 var btn = layero.find('.layui-layer-btn');
                 btn.css('text-align', 'center');
