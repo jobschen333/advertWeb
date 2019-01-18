@@ -1,5 +1,6 @@
 package com.web.service;
 
+import com.github.pagehelper.PageInfo;
 import com.web.bean.DO.AdvTransferAccounts;
 
 /**
@@ -15,4 +16,5 @@ public interface IAdvTransferAccountsService {
      */
     boolean insertTransferAccount(AdvTransferAccounts advTransferAccounts);
 
+    PageInfo selectTransferRecordList(int userId, Integer page, Integer limit);
 }

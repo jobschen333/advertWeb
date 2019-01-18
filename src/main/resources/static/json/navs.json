@@ -19,6 +19,12 @@
 			"icon": "icon-text",
 			"href": "page/record/advRecordList.html",
 			"spread": false
+		},
+		{
+			"title": "转账记录",
+			"icon": "icon-text",
+			"href": "page/record/advTransferRecordList.html",
+			"spread": false
 		}
 	],
 	"seraphApi": [

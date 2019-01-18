@@ -1,10 +1,12 @@
 package com.web.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.web.bean.BO.ResultBO;
 import com.web.bean.BO.UserSessionBO;
 import com.web.bean.DO.AdvTransferAccounts;
 import com.web.service.IAdvTransferAccountsService;
 import com.web.util.DateUtil;
+import com.web.util.JsonUtil;
 import com.web.util.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +55,21 @@ public class AdvTransferAccountsController {
             return Results.success("转账成功!");
         }
         return Results.fail("转账失败!");
+    }
 
-
+    /**
+     * 转账记录
+     * @param userSessionBO
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("list")
+    @ResponseBody
+    public String listRecord(UserSessionBO userSessionBO,
+                             @RequestParam(value = "page" , defaultValue = "1") Integer page,
+                             @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
+        PageInfo pageInfo = advTransferAccountsService.selectTransferRecordList(userSessionBO.getUserId(), page, limit);
+        return JsonUtil.requestListToJson(pageInfo.getList(), (int) pageInfo.getTotal());
     }
 }

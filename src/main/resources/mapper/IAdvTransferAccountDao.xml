@@ -8,4 +8,10 @@
         addTime,remark, status) VALUES (#{userId}, #{sendAddress}, #{localAddress}, #{sendToken} , #{addTime},#{remark}, #{status})
 
     </insert>
+    <select id="selectList" resultType="com.web.bean.DO.AdvTransferAccounts">
+        SELECT id, userId, sendAddress, localAddress, sendToken,
+        addTime,remark, status
+        FROM adv_transfer_accounts
+        WHERE userId = #{userId}
+    </select>
 </mapper>
