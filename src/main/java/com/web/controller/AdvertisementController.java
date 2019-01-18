@@ -54,7 +54,7 @@ public class AdvertisementController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
     public String list(HttpServletRequest request){
-        UserSessionBO userSessionBO = UserWebInterceptor.getUserSessionBO(request);
+            UserSessionBO userSessionBO = UserWebInterceptor.getUserSessionBO(request);
         int userId = 0;
         if (userSessionBO != null) {
             userId = userSessionBO.getUserId();
@@ -82,6 +82,11 @@ public class AdvertisementController {
         String limitStr = request.getParameter("limit");
         AdvAdvert advAdvert = new AdvAdvert();
         advAdvert.setTitle(title);
+        //获取商家id
+        AdvBusiness advBusiness = bussinessService.selectByUserId(userSessionBO.getUserId());
+        if (advBusiness != null) {
+            advAdvert.setBusinessId(advBusiness.getId());
+        }
         int page = ProjectConfig.FRIST_PAGE ;
         int limit = ProjectConfig.PAGE_SIZE;
         if (pageStr!=""||pageStr!=null){
@@ -124,6 +129,7 @@ public class AdvertisementController {
                 .clickToken(clickToken)
                 .waste_token(wasteToken)
                 .count_click(0)
+                .status(1)
                 .build();
         boolean boo = advertismentService.insert(advAdvert);
         if (!boo){

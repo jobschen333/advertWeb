@@ -39,9 +39,9 @@
     </select>
 
     <insert id="insert" parameterType="com.web.bean.DO.AdvAdvert" >
-        INSERT INTO adv_advert (title, content, url, pic, waste_token, must_click, count_click, add_time, businessId, rank, clickToken)
+        INSERT INTO adv_advert (title, content, url, pic, waste_token, must_click, count_click, add_time, businessId, rank, clickToken ,status)
         VALUES (#{title}, #{content}, #{url}, #{pic}, #{waste_token}, #{must_click}, #{count_click}, #{add_time}, #{businessId}, #{rank}
-        , #{clickToken})
+        , #{clickToken}, #{status})
     </insert>
 
     <select id="selectOne" resultType="com.web.bean.DO.AdvAdvert" >
@@ -50,12 +50,15 @@
         WHERE
         id = #{id}
     </select>
-    <select id="selectPage" resultType="com.web.bean.DO.AdvAdvert">
+    <select id="selectPage" resultType="com.web.bean.DO.AdvAdvert" parameterType="com.web.bean.DO.AdvAdvert">
         select id, title, content, url, pic, waste_token, must_click, count_click, add_time, status, businessId,rank, clickToken
         FROM adv_advert
         WHERE 1 = 1
         <if test="title!='' and title!=null">
             AND title LIKE '%${title}%'
+        </if>
+        <if test="businessId!='' and businessId != null" >
+            And businessId = #{businessId}
         </if>
         AND status = 1
     </select>

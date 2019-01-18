@@ -22,7 +22,11 @@ public interface AdvAdvertDao {
      */
     List<AdvAdvertVO> select(@Param("advAdvert") AdvAdvert advAdvert, @Param("userId") int userId);
 
-
+    /**
+     * 查找商家后台
+     * @param advAdvert
+     * @return
+     */
     List<AdvAdvert> selectPage(AdvAdvert advAdvert);
 
     /**

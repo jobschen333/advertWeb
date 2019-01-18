@@ -54,12 +54,7 @@ public class AdvertismentServiceImpl implements IAdvertismentService {
      */
     @Override
     public boolean insert(AdvAdvert advAdvert) {
-        boolean boo = false;
-        int affect = advAdvertDao.insert(advAdvert);
-        if (affect > 0){
-            boo = true;
-        }
-        return boo;
+        return advAdvertDao.insert(advAdvert) > 0;
 
     }
 

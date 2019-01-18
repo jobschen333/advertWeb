@@ -18,6 +18,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 @ComponentScan
+//@Import(TestAop.class)
+
 public class MyBatisConfig {
 
     @Autowired
